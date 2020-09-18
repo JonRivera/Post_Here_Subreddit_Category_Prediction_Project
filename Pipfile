@@ -16,6 +16,13 @@ fastapi = "*"
 pandas = "*"
 uvicorn = "*"
 plotly = "*"
+pandas = "*"
+numpy = = "*"
+psycopg2-binary = "*"
+matplotlib = "*"
+praw = "*"
+scikit-learn = "*"
+tensorflow = "*"
 
 [requires]
 python_version = "3.7"
