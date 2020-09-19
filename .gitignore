@@ -3,4 +3,5 @@
 .ipynb_checkpoints
 .pytest_cache
 .vscode
+database/secrets
 Pipfile.lock
