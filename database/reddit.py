@@ -18,11 +18,12 @@ def get_data(subs, n_posts=1):
     subs - set of sub-reddits you plan to get posts from
     n_posts - how many posts to grab per sub
     """
-    conn, curs = conn_curs()
+    conn, curs = conn_curs()  # this one connects to allan
     curs.execute("SELECT Distinct(subreddit) FROM posts")
     x = [i[0] for i in curs.fetchall()]
     for i in subs:
         if i not in x:
+            print(i)
             sub = reddit.subreddit(i)
             hot = sub.hot(limit=n_posts)
             for post in hot:
@@ -40,6 +41,8 @@ if __name__ == "__main__":
                'talesfromtechsupport', 'TalesFromRetail', 'britishproblems', 'whowouldwin', 'WritingPrompts', 'AskMen',
                'AskWomen', 'askscience', 'newreddits', 'HailCorporate', 'boringdystopia', 'bestof', 'KarmaCourt',
                'AmItheAsshole', 'RedditWritesSeinfeld', 'nosleep', 'pcmasterrace', 'learnpython', 'politics',
-               'LifeProTips', 'Jokes', 'gaming'}
-    #1
+               'LifeProTips', 'Jokes', 'gaming', 'Showerthoughts', 'teenagers', 'linux', 'television', 'soccer',
+               'hockey', 'ADHD', 'Games', 'LifeProTips', 'CasualConversation', 'nfl', 'socialanxiety', 'seduction',
+               'DecidingToBeBetter', 'socialskills', 'godtiersuperpowers', '3amjokes','ShouldIbuythisgame','dadjokes',
+               'Jokes', 'offmychest', 'PoliticalDiscussion'}
     get_data(reddits, n_posts=300)
