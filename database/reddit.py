@@ -1,6 +1,6 @@
 """Leverages the reddit api + queries.py to get reddit posts and upload them to a postgres database"""
 import praw
-from database.query import insert_post
+from database.query import insert_post, conn_curs
 
 with open("secrets", "r") as file:
     secrets = [i.strip('\n') for i in file.readlines()]
@@ -18,14 +18,18 @@ def get_data(subs, n_posts=1):
     subs - set of sub-reddits you plan to get posts from
     n_posts - how many posts to grab per sub
     """
+    conn, curs = conn_curs()
+    curs.execute("SELECT Distinct(subreddit) FROM posts")
+    x = [i[0] for i in curs.fetchall()]
     for i in subs:
-        sub = reddit.subreddit(i)
-        hot = sub.hot(limit=n_posts)
-        for post in hot:
-            text = f"{post.title} {post.selftext}".replace("'", "")
-            which_sub = str(post.subreddit)[:20]
-            insert_post(text, which_sub)
-            print('uploaded')
+        if i not in x:
+            sub = reddit.subreddit(i)
+            hot = sub.hot(limit=n_posts)
+            for post in hot:
+                text = f"{post.title} {post.selftext}".replace("'", "")
+                which_sub = str(post.subreddit)[:20]
+                insert_post(text, which_sub)
+                print('uploaded')
         print('Finished sub')
     return
 
@@ -35,10 +39,7 @@ if __name__ == "__main__":
                'explainlikeimfive', 'OutOfTheLoop', 'books', 'ProRevenge', 'TellMeAFact', 'bestoflegaladvice',
                'talesfromtechsupport', 'TalesFromRetail', 'britishproblems', 'whowouldwin', 'WritingPrompts', 'AskMen',
                'AskWomen', 'askscience', 'newreddits', 'HailCorporate', 'boringdystopia', 'bestof', 'KarmaCourt',
-               'AmItheAsshole', 'RedditWritesSeinfeld', 'Nosleep', 'pcmasterrace', 'learnpython'}
-
+               'AmItheAsshole', 'RedditWritesSeinfeld', 'nosleep', 'pcmasterrace', 'learnpython', 'politics',
+               'LifeProTips', 'Jokes', 'gaming'}
+    #1
     get_data(reddits, n_posts=300)
-
-# need a conditional in the outer loop to check if sub in db,
-# make conn excute distinct query fetchall then if not in x
-# if not i in curs.execute("SELECT Distinct(subreddit)")[0][0]:
