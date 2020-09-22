@@ -2,8 +2,13 @@ import logging
 import random
 
 from fastapi import APIRouter
-import pandas as pd
 from pydantic import BaseModel, Field, validator
+import pickle
+
+with open("models/mvp_log_pipe", "rb") as file:
+    model = pickle.load(file)
+
+
 
 log = logging.getLogger(__name__)
 router = APIRouter()
@@ -12,44 +17,44 @@ router = APIRouter()
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    x1: float = Field(..., example=3.14)
-    x2: int = Field(..., example=-42)
-    x3: str = Field(..., example='banjo')
+    Title: str = Field(..., example='This is a Reddit title')
+    Post: str = Field(..., example='This is a Redd post')
+   
+    @validator('Title')
+    def title_must_be_a_string(cls, value):
+        """Validate that Title is a string."""
+        assert type(value) == str, f'Title == {value}, must be a string'
+        return value
 
-    def to_df(self):
-        """Convert pydantic object to pandas dataframe with 1 row."""
-        return pd.DataFrame([dict(self)])
-
-    @validator('x1')
-    def x1_must_be_positive(cls, value):
-        """Validate that x1 is a positive number."""
-        assert value > 0, f'x1 == {value}, must be > 0'
+    @validator('Post')
+    def post_must_be_a_string(cls, value):
+        """Validate that post is a string."""
+        assert type(value) == str, f'Title == {value}, must be a string'
         return value
 
 
 @router.post('/predict')
 async def predict(item: Item):
     """
-    Make random baseline predictions for classification problem 🔮
+    Predicts what reddit to post to 🔮
 
     ### Request Body
-    - `x1`: positive float
-    - `x2`: integer
-    - `x3`: string
+    - Title: str 
+    - Post: str
 
     ### Response
-    - `prediction`: boolean, at random
-    - `predict_proba`: float between 0.5 and 1.0, 
-    representing the predicted class's probability
-
-    Replace the placeholder docstring and fake predictions with your own model.
+    - `prediction`: List of top 5 reddits 
     """
 
-    X_new = item.to_df()
-    log.info(X_new)
-    y_pred = random.choice([True, False])
-    y_pred_proba = random.random() / 2 + 0.5
+    
+    reddit_post = item.Title + ' ' + item.Post
+    prob = model.predict_proba([reddit_post])[0]
+    x = list(zip(model.classes_,prob))
+    y = sorted(x, key=lambda z: z[1], reverse=True)
     return {
-        'prediction': y_pred,
-        'probability': y_pred_proba
+        'predicition': [i[0] for i in y[:5]]
     }
+
+
+
+
