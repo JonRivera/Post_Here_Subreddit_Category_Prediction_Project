@@ -3,9 +3,13 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <orderEntry type="jdk" jdkName="Python 3.7 (ds_reddit_build-L6udXIR8)" jdkType="Python SDK" />
 =======
     <orderEntry type="inheritedJdk" />
+>>>>>>> Stashed changes
+=======
+    <orderEntry type="jdk" jdkName="Python 3.7 (ds_reddit_build-nI7wJL8F)" jdkType="Python SDK" />
 >>>>>>> Stashed changes
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

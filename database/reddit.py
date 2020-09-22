@@ -58,6 +58,7 @@ def get_data(subs, n_posts=1):
 
 if __name__ == "__main__":
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     reddits = {'learnSQL', 'MovieSuggestions', 'dating_advice', 'philosophy', 'worldnews', 'tifu', 'patientgamers',
                'explainlikeimfive', 'OutOfTheLoop', 'books', 'ProRevenge', 'TellMeAFact', 'bestoflegaladvice',
                'talesfromtechsupport', 'TalesFromRetail', 'britishproblems', 'whowouldwin', 'WritingPrompts', 'AskMen',
@@ -67,6 +68,30 @@ if __name__ == "__main__":
                'hockey', 'ADHD', 'Games', 'LifeProTips', 'CasualConversation', 'nfl', 'socialanxiety', 'seduction',
                'DecidingToBeBetter', 'socialskills', 'godtiersuperpowers', '3amjokes','ShouldIbuythisgame','dadjokes',
                'Jokes', 'offmychest', 'PoliticalDiscussion'}
+=======
+
+    reddits = {'whatsthatbook', 'CasualConversation', 'Clairvoyantreadings',
+               'DecidingToBeBetter', 'HelpMeFind', 'LifeProTips', 'MLPLounge',
+               'NoStupidQuestions', 'RBI', 'TooAfraidToAsk', 'answers', 'ask',
+               'changemyview', 'christmas', 'explainlikeimfive', 'findapath',
+               'getting_over_it', 'help', 'ifyoulikeblank', 'makemychoice',
+               'GetMotivated', 'getdisciplined', 'productivity', 'GiftIdeas',
+               'Gifts', 'IWantOut', 'ImmigrationCanada', 'immigration', 'ukvisa',
+               'nosurf', 'AusLegal', 'LegalAdviceUK', 'asklaw', 'legal',
+               'legaladvice', 'legaladviceofftopic', 'INeedAName',
+               'whatsthisplant', 'resumes', 'NameThatSong', 'StopGaming',
+               'translator', 'whatsthisworth', 'whatstheword', 'WouldYouRather',
+               'Beekeeping', 'bettafish', 'Pets', 'reptiles', 'AquaSwap',
+               'CatAdvice', 'cats', 'BackYardChickens', 'Petloss', 'Dogtraining',
+               'dogs', 'puppy101', 'ferrets', 'guineapigs', 'hamsters', 'Bedbugs',
+               'whatsthisbug', 'leopardgeckos', 'BeardedDragons', 'parrots',
+               'pestcontrol', 'Rabbits', 'RATS', 'shrimptank', 'ballpython',
+               'snakes', 'tarantulas', 'ShingekiNoKyojin', 'Berserk', 'bleach',
+               'BokuNoHeroAcademia', 'Animesuggest', 'anime', 'manga',
+               'CaptainTsubasaDT', 'DarlingInTheFranxx', 'deathnote', 'DDLC',
+               'Dragonballsuper', 'dbz', 'fatestaynight', 'Gundam', 'Gunpla',
+               'HunterXHunter', 'StardustCrusaders', 'KissAnime', 'araragi'}
+>>>>>>> Stashed changes
     get_data(reddits, n_posts=300)
 =======
     reddits = {'whatsthatbook', 'CasualConversation', 'Clairvoyantreadings',
