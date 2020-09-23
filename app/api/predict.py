@@ -44,7 +44,7 @@ class Post(BaseModel):
         return entire_post
 
     @validator('type')
-    def post_is_string(cls, title, text): # couldnt find why cls and not self
+    def post_is_string(cls, title, text):# couldnt find why cls and not self
         """ Makes sure that both title and text are strings"""
         if is_string(title) == True: # type(title) == string?
             if is_string(text) == True:
