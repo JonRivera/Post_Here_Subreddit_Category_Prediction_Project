@@ -22,7 +22,11 @@ def create_table():
     no need
     """
     conn, curs = conn_curs()
-    create = "CREATE TABLE posts(id SERIAL PRIMARY KEY, text TEXT NOT NULL, subreddit VARCHAR(30) NOT NULL)"
+    create = "CREATE TABLE posts(id SERIAL PRIMARY KEY, " \
+             "text TEXT NOT NULL, " \
+             "title TEXT NOT NULL," \
+             "subreddit VARCHAR(30) NOT NULL," \
+             "upvotes smallint)"
     curs.execute(create)
     conn.commit()
     return

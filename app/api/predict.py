@@ -37,6 +37,12 @@ class Post(BaseModel):
         converted = str(text)
         return converted
 
+    def combine(self, title, text):
+        """ If we are analyzing both title and text we can use this"""
+        # need to change variable name if we use this
+        entire_post = str(title) + str(text)
+        return entire_post
+
     @validator('type')
     def post_is_string(self, title, text):
         """ Makes sure that both title and text are strings"""
@@ -65,7 +71,7 @@ def log_in(user, password):
     We're not going to need this BUT there is the getLogger in line 10
     so we might need to be able to validate it, unless that's Web
     """
-    pass  # difference between router.post and app.post
+    pass  # difference between router.post and app.post?
 
 
 # Bryce's model that I accidentally overwrote
