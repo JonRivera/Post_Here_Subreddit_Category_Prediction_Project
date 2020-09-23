@@ -23,6 +23,7 @@ class Post(BaseModel):
         return pd.DataFrame([dict(self)])
 
     def long_or_nah(self, post, message=None):
+        """ To use so we see if length affects placement?"""
         try:
             if len(post.text) >= 250:
                 message = "This is a long post"
@@ -65,6 +66,28 @@ def log_in(user, password):
     so we might need to be able to validate it, unless that's Web
     """
     pass  # difference between router.post and app.post
+
+
+# Bryce's model that I accidentally overwrote
+# class Item(BaseModel):
+#     """Use this data model to parse the request body JSON."""
+#
+#     Title: str = Field(..., example='This is a Reddit title')
+#     Post: str = Field(..., example='This is a Redd post')
+#
+#     @validator('Title')
+#     def title_must_be_a_string(cls, value):
+#         """Validate that Title is a string."""
+#         assert type(value) == str, f'Title == {value}, must be a string'
+#         return value
+#
+#     @validator('Post')
+#     def post_must_be_a_string(cls, value):
+#         """Validate that post is a string."""
+#         assert type(value) == str, f'Title == {value}, must be a string'
+#         return value
+
+""" This part was given in the original file"""
 
 # @router.post('/predict')
 # async def predict(item: Item):
