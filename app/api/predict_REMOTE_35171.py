@@ -4,25 +4,14 @@ import random
 from fastapi import APIRouter, FastAPI
 import pandas as pd
 from pydantic import BaseModel, Field, validator
-<<<<<<< HEAD
-import pickle
-
-with open("models/mvp_log_pipe", "rb") as file:
-    model = pickle.load(file)
-=======
 
 # app = FastAPI() in main.py
->>>>>>> ba5ba2b76244de50b70dd40c2746ed52ab5e52ef
 
 log = logging.getLogger(__name__)
 router = APIRouter()
 
-<<<<<<< HEAD
-class Item(BaseModel):
-=======
 
 class Post(BaseModel):
->>>>>>> ba5ba2b76244de50b70dd40c2746ed52ab5e52ef
     """Use this data model to parse the request body JSON."""
     title: str = Field(..., example='Where is the moon?', nullable=False)
     text: str = Field(..., example='I can never see the moon during the day')
@@ -76,17 +65,6 @@ def log_in(user, password):
     We're not going to need this BUT there is the getLogger in line 10
     so we might need to be able to validate it, unless that's Web
     """
-<<<<<<< HEAD
-
-    
-    reddit_post = item.Title + ' ' + item.Post
-    prob = model.predict_proba([reddit_post])[0]
-    x = list(zip(model.classes_,prob))
-    y = sorted(x, key=lambda z: z[1], reverse=True)
-    return {
-        'predicition': [i[0] for i in y[:5]]
-    }
-=======
     pass  # difference between router.post and app.post
 
 
@@ -137,4 +115,3 @@ def log_in(user, password):
 #         'prediction': y_pred,
 #         'probability': y_pred_proba
 #     }
->>>>>>> ba5ba2b76244de50b70dd40c2746ed52ab5e52ef
