@@ -1,55 +1,94 @@
 import logging
 import random
 
-from fastapi import APIRouter
+from fastapi import APIRouter, FastAPI
 import pandas as pd
 from pydantic import BaseModel, Field, validator
+
+# app = FastAPI() in main.py
 
 log = logging.getLogger(__name__)
 router = APIRouter()
 
 
-class Item(BaseModel):
+class Post(BaseModel):
     """Use this data model to parse the request body JSON."""
-
-    x1: float = Field(..., example=3.14)
-    x2: int = Field(..., example=-42)
-    x3: str = Field(..., example='banjo')
+    title: str = Field(..., example='Where is the moon?', nullable=False)
+    text: str = Field(..., example='I can never see the moon during the day')
+    # added upvotes so we can see if popularity of posts affects placement
+    upvotes: int = Field(..., example=0)
 
     def to_df(self):
         """Convert pydantic object to pandas dataframe with 1 row."""
         return pd.DataFrame([dict(self)])
 
-    @validator('x1')
-    def x1_must_be_positive(cls, value):
-        """Validate that x1 is a positive number."""
-        assert value > 0, f'x1 == {value}, must be > 0'
-        return value
+    def long_or_nah(self, post, message=None):
+        try:
+            if len(post.text) >= 250:
+                message = "This is a long post"
+            else:
+                message = "This is a short post"
+        except Exception as e:
+            message = f"Error - {e}"
+        return message
+
+    def convert_to_string(self, text):
+        converted = str(text)
+        return converted
+
+    @validator('type')
+    def post_is_string(self, title, text):
+        """ Makes sure that both title and text are strings"""
+        if is_string(title) == True:
+            if is_string(text) == True:
+                return f"Both Title and Text are Strings"
+            else:
+                return f"{text} must be a string"
+        else:
+            return f"{title} must be a string"
 
 
-@router.post('/predict')
-async def predict(item: Item):
+# this is based solely off R. Herr's example
+@app.post('/predict_post', method=['POST'])
+def predict_post(posts: Post):
+    """ Predict the subreddit based on total text in both Title and Text"""
+    # making a new df so we can modify the data, if needed
+    predictor = pd.DataFrame([df])
+    apt_location = classifier.predict_post(predictor)
+    return apt_location[0]
+
+
+@router.post('/log_in', method=['POST'])
+def log_in(user, password):
     """
-    Make random baseline predictions for classification problem 🔮
-
-    ### Request Body
-    - `x1`: positive float
-    - `x2`: integer
-    - `x3`: string
-
-    ### Response
-    - `prediction`: boolean, at random
-    - `predict_proba`: float between 0.5 and 1.0, 
-    representing the predicted class's probability
-
-    Replace the placeholder docstring and fake predictions with your own model.
+    We're not going to need this BUT there is the getLogger in line 10
+    so we might need to be able to validate it, unless that's Web
     """
+    pass  # difference between router.post and app.post
 
-    X_new = item.to_df()
-    log.info(X_new)
-    y_pred = random.choice([True, False])
-    y_pred_proba = random.random() / 2 + 0.5
-    return {
-        'prediction': y_pred,
-        'probability': y_pred_proba
-    }
+# @router.post('/predict')
+# async def predict(item: Item):
+#     """
+#     Make random baseline predictions for classification problem 🔮
+#
+#     ### Request Body
+#     - `x1`: positive float
+#     - `x2`: integer
+#     - `x3`: string
+#
+#     ### Response
+#     - `prediction`: boolean, at random
+#     - `predict_proba`: float between 0.5 and 1.0,
+#     representing the predicted class's probability
+#
+#     Replace the placeholder docstring and fake predictions with your own model.
+#     """
+#
+#     X_new = item.to_df()
+#     log.info(X_new)
+#     y_pred = random.choice([True, False])
+#     y_pred_proba = random.random() / 2 + 0.5
+#     return {
+#         'prediction': y_pred,
+#         'probability': y_pred_proba
+#     }
