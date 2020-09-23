@@ -38,15 +38,15 @@ class Post(BaseModel):
         return converted
 
     def combine(self, title, text):
-        """ If we are analyzing both title and text we can use this"""
+        """ If we are analyzing both title and text in one variable, use this"""
         # need to change variable name if we use this
         entire_post = str(title) + str(text)
         return entire_post
 
     @validator('type')
-    def post_is_string(self, title, text):
+    def post_is_string(cls, title, text): # couldnt find why cls and not self
         """ Makes sure that both title and text are strings"""
-        if is_string(title) == True:
+        if is_string(title) == True: # type(title) == string?
             if is_string(text) == True:
                 return f"Both Title and Text are Strings"
             else:
