@@ -8,11 +8,8 @@ import pickle
 with open("models/mvp_log_pipe", "rb") as file:
     model = pickle.load(file)
 
-
-
 log = logging.getLogger(__name__)
 router = APIRouter()
-
 
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
@@ -54,7 +51,3 @@ async def predict(item: Item):
     return {
         'predicition': [i[0] for i in y[:5]]
     }
-
-
-
-
