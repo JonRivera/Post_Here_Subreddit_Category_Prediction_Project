@@ -7,7 +7,7 @@ client = TestClient(app)
 
 def test_valid_input():
     """Return 200 Success for valid 2 character US state postal code."""
-    response = client.get('/viz/IL')
+    response = client.get('/vizlength')
     assert response.status_code == 200
     assert 'Illinois Unemployment Rate' in response.text
 
