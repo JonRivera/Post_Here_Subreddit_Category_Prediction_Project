@@ -18,26 +18,17 @@ class Item(BaseModel):
     Title: str = Field(..., example='This is a Reddit title', nullable=False)
     Post: str = Field(..., example='This is a Redd post')
 
-    def combine(self, title, post):
-        """ If we are analyzing both title and text in one variable, use this"""
-        # need to change variable name if we use this
-        entire_post = str(title) + ' ' + str(post)
-        return entire_post
-
-    def convert_to_string(self, text):
-        converted = str(text)
-        return converted
-
-    @validator('Text')  # why write this twice? - DRY
-    def text_must_be_a_string(cls, value):
+    @validator('Title')  # why write this twice? - DRY
+    def title_must_be_a_string(cls, value):
         """Validate that Title is a string."""
         assert type(value) == str, f'Title == {value}, must be a string'
         return value
 
-    @validator('Title')
-    def must_have_title(cls, title):
-        """ All reddit posts must have a title"""
-        return cls.assertIsNotNone(title)
+    @validator('Post')  # why write this twice? - DRY
+    def post_must_be_a_string(cls, value):
+        """Validate that Title is a string."""
+        assert type(value) == str, f'Title == {value}, must be a string'
+        return value
 
 
 @router.post('/predict')
@@ -52,7 +43,7 @@ async def predict(item: Item):
     ### Response
     - `prediction`: List of top 5 reddits
     """
-    reddit_post = item.Title + ' ' + item.Post
+    reddit_post = str(item.Title) + ' ' + str(item.Post)
     prob = model.predict_proba([reddit_post])[0]
     x = list(zip(model.classes_, prob))
     y = sorted(x, key=lambda z: z[1], reverse=True)
