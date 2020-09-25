@@ -18,13 +18,13 @@ class Item(BaseModel):
     Title: str = Field(..., example='This is a Reddit title', nullable=False)
     Post: str = Field(..., example='This is a Redd post')
 
-    @validator('Title')  # why write this twice? - DRY
+    @validator('Title')
     def title_must_be_a_string(cls, value):
         """Validate that Title is a string."""
         assert type(value) == str, f'Title == {value}, must be a string'
         return value
 
-    @validator('Post')  # why write this twice? - DRY
+    @validator('Post')  # needs 2 diff validator routes because needs Item fields
     def post_must_be_a_string(cls, value):
         """Validate that Title is a string."""
         assert type(value) == str, f'Title == {value}, must be a string'
@@ -43,7 +43,7 @@ async def predict(item: Item):
     ### Response
     - `prediction`: List of top 5 reddits
     """
-    reddit_post = str(item.Title) + ' ' + str(item.Post)
+    reddit_post = item.Title + ' ' + item.Post
     prob = model.predict_proba([reddit_post])[0]
     x = list(zip(model.classes_, prob))
     y = sorted(x, key=lambda z: z[1], reverse=True)
